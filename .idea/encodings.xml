@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/discovery/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/r4j/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/simple-service-five/simple-service-five-cluster-four/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/simple-service-five/simple-service-five-cluster-one/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/simple-service-five/simple-service-five-cluster-three/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/simple-service-five/simple-service-five-cluster-two/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/simple-service-four/simple-service-four-cluster-one/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/simple-service-four/simple-service-four-cluster-two/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/simple-service-one/simple-service-one-cluster-one/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/simple-service-one/simple-service-one-cluster-two/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/simple-service-three/simple-service-three-cluster-one/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/simple-service-three/simple-service-three-cluster-three/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/simple-service-three/simple-service-three-cluster-two/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/simple-service-two/simple-service-two-cluster-one/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/simple-service-two/simple-service-two-cluster-three/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/simple-service-two/simple-service-two-cluster-two/src/main/java" charset="UTF-8" />
+  </component>
+</project>

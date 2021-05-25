@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="simple-service-five-cluster-two" />
+        <module name="simple-service-four-cluster-two" />
+        <module name="simple-service-five-cluster-three" />
+        <module name="simple-service-two-cluster-one" />
+        <module name="r4j" />
+        <module name="simple-service-three-cluster-one" />
+        <module name="simple-service-two-cluster-three" />
+        <module name="simple-service-three-cluster-two" />
+        <module name="simple-service-five-cluster-four" />
+        <module name="discovery" />
+        <module name="simple-service-three-cluster-three" />
+        <module name="simple-service-five-cluster-one" />
+        <module name="simple-service-one-cluster-two" />
+        <module name="simple-service-one-cluster-one" />
+        <module name="simple-service-two-cluster-two" />
+        <module name="gateway" />
+        <module name="simple-service-four-cluster-one" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="simple-service-one-1" target="11" />
+      <module name="simple-service-one-2" target="11" />
+      <module name="simple-service-three-1" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="discovery" options="-parameters" />
+      <module name="gateway" options="-parameters" />
+      <module name="r4j" options="-parameters" />
+      <module name="simple-service-five" options="-parameters" />
+      <module name="simple-service-five-cluster-four" options="-parameters" />
+      <module name="simple-service-five-cluster-one" options="-parameters" />
+      <module name="simple-service-five-cluster-three" options="-parameters" />
+      <module name="simple-service-five-cluster-two" options="-parameters" />
+      <module name="simple-service-four" options="-parameters" />
+      <module name="simple-service-four-cluster-one" options="-parameters" />
+      <module name="simple-service-four-cluster-two" options="-parameters" />
+      <module name="simple-service-one" options="-parameters" />
+      <module name="simple-service-one-1" options="-parameters" />
+      <module name="simple-service-one-2" options="-parameters" />
+      <module name="simple-service-one-cluster-one" options="-parameters" />
+      <module name="simple-service-one-cluster-two" options="-parameters" />
+      <module name="simple-service-three" options="-parameters" />
+      <module name="simple-service-three-1" options="-parameters" />
+      <module name="simple-service-three-cluster-one" options="-parameters" />
+      <module name="simple-service-three-cluster-three" options="-parameters" />
+      <module name="simple-service-three-cluster-two" options="-parameters" />
+      <module name="simple-service-two" options="-parameters" />
+      <module name="simple-service-two-cluster-one" options="-parameters" />
+      <module name="simple-service-two-cluster-three" options="-parameters" />
+      <module name="simple-service-two-cluster-two" options="-parameters" />
+    </option>
+  </component>
+</project>

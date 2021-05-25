@@ -1,0 +1,20 @@
+server:
+  port: 9390
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: false
+    # 指出间隔多少秒重新请求一次Eureka Server
+    registry-fetch-interval-seconds: 120
+    service-url:
+      defaultZone: http://127.0.0.1:9190/eureka
+spring:
+  cloud:
+    gateway:
+      enabled: true
+      # 当实例不可用，返回404而不是503
+      loadbalancer:
+        use404: true
+  redis:
+    host: 127.0.0.1
+    password: 461200
