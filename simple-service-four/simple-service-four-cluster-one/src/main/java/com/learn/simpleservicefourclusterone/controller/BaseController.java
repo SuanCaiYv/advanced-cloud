@@ -16,7 +16,7 @@ public class BaseController {
 
     @GetMapping("/ok1")
     public String ok() {
-        LockSupport.parkNanos(Duration.ofSeconds(10).toNanos());
+        // LockSupport.parkNanos(Duration.ofSeconds(10).toNanos());
         return "ok";
     }
 

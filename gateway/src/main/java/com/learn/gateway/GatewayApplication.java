@@ -34,13 +34,13 @@ public class GatewayApplication {
     public CircuitBreakerConfig customCircuitBreakerConfig() {
         return CircuitBreakerConfig.custom()
                 // 确保CB维持在打开状态的时间，之后会自动切换到半开，如果开启了自动切换的话
-                .waitDurationInOpenState(Duration.ofMillis(2000))
+                .waitDurationInOpenState(Duration.ofMillis(20))
                 .automaticTransitionFromOpenToHalfOpenEnabled(true)
                 // 确保CB维持在半开状态的时间，在它切换到打开状态之前。时间越长，越有可能因为新的请求可用而在切换到打开状态之前重新回到关闭状态。
                 // 但是时间越长，越有可能拖垮上流服务
-                .maxWaitDurationInHalfOpenState(Duration.ofMillis(4000))
+                .maxWaitDurationInHalfOpenState(Duration.ofMillis(40))
                 // 失败率阀值
-                .failureRateThreshold(30)
+                .failureRateThreshold(50)
                 // 滑动窗口大小，只有请求总数到达这个大小才会进行失败率计算。
                 // 此外，对于CLOSED状态的CB，只有请求至少达到这个值才会计算，此前不会限制请求数。
                 // 达到这个大小会开始计算，同时继续接受请求。

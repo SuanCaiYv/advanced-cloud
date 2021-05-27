@@ -26,6 +26,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
+import java.util.function.Function;
 
 /**
  * @author 十三月之夜
@@ -56,25 +57,28 @@ public class GlobalFilterLearnOne implements GlobalFilter, Ordered {
         URI uri = exchange.getAttribute(ServerWebExchangeUtils.GATEWAY_REQUEST_URL_ATTR);
         String id = uri.getHost() + ":" + uri.getPort();
         CircuitBreaker circuitBreaker = customCircuitBreakerRegistry.circuitBreaker(id, customCircuitBreakerConfig);
-        System.out.println(circuitBreaker.getState());
-        System.out.println(circuitBreaker.getName());
+        // System.out.println(circuitBreaker.getName());
         TimeLimiter timeLimiter = customTimeLimiterRegistry.timeLimiter(id, customTimeLimiterConfig);
         // System.out.println(id);
         // 在这里配置我们需要的自定义R4J熔断机制，作为全局过滤器被添加到了每一个Route上
         return chain.filter(exchange)
-                .transform(voidMono -> {
-                    CheckedFunction0<Void> voidCheckedFunction0 = CircuitBreaker.decorateCheckedSupplier(circuitBreaker, voidMono::block);
-                    Try<Void> of = Try
-                            .of(voidCheckedFunction0)
-                            .recover(throwable -> {
-                                System.out.println("err");
-                                return null;
-                            });
-                    return (Publisher<Void>) s -> {
-                        ;
-                    };
-                })
-                .transform(TimeLimiterOperator.of(timeLimiter));
+                .transform(val1 -> addCircuitBreaker(val1, circuitBreaker));
+    }
+
+    /**
+     * 这段代码写的比较丑，更好地实现应该是继承{@link reactor.core.publisher.MonoOperator}来实现
+     */
+    public static Mono<Void> addCircuitBreaker(Mono<Void> source, CircuitBreaker circuitBreaker) {
+        CircuitBreakerOperator.of()
+        return source;
+    }
+
+    private static Mono<Void> modifyFunction(Mono<Void> input) {
+        return null;
+    }
+
+    private static Mono<Void> getVoidMono() {
+        return Mono.empty().then();
     }
 
     private void write(ServerWebExchange exchange) {
