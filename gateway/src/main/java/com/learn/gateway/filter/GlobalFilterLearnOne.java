@@ -68,8 +68,10 @@ public class GlobalFilterLearnOne implements GlobalFilter, Ordered {
         System.out.println(circuitBreaker.getState());
         return chain.filter(exchange)
                 .transformDeferred(CircuitBreakerOperator.of(circuitBreaker))
+                .transformDeferred(TimeLimiterOperator.of(timeLimiter))
                 .onErrorResume(throwable -> {
                     // do fallback
+                    exchange.getResponse().setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
                     return Mono.empty().then();
                 });
     }
