@@ -69,7 +69,7 @@ public class GlobalFilterLearnOne implements GlobalFilter, Ordered {
      * 这段代码写的比较丑，更好地实现应该是继承{@link reactor.core.publisher.MonoOperator}来实现
      */
     public static Mono<Void> addCircuitBreaker(Mono<Void> source, CircuitBreaker circuitBreaker) {
-        CircuitBreakerOperator.of()
+        // TODO 重写一个Publisher
         return source;
     }
 
