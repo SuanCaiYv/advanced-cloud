@@ -1,5 +1,6 @@
 package com.learn.gateway.filter;
 
+import com.learn.gateway.util.ExchangeUtils;
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
@@ -18,8 +19,11 @@ import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.filter.ReactiveLoadBalancerClientFilter;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
 import org.springframework.core.Ordered;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.core.io.buffer.DataBufferFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import org.springframework.web.server.ServerWebExchange;
@@ -61,29 +65,17 @@ public class GlobalFilterLearnOne implements GlobalFilter, Ordered {
         TimeLimiter timeLimiter = customTimeLimiterRegistry.timeLimiter(id, customTimeLimiterConfig);
         // System.out.println(id);
         // 在这里配置我们需要的自定义R4J熔断机制，作为全局过滤器被添加到了每一个Route上
+        System.out.println(circuitBreaker.getState());
         return chain.filter(exchange)
-                .transform(val1 -> addCircuitBreaker(val1, circuitBreaker));
-    }
-
-    /**
-     * 这段代码写的比较丑，更好地实现应该是继承{@link reactor.core.publisher.MonoOperator}来实现
-     */
-    public static Mono<Void> addCircuitBreaker(Mono<Void> source, CircuitBreaker circuitBreaker) {
-        // TODO 重写一个Publisher
-        return source;
-    }
-
-    private static Mono<Void> modifyFunction(Mono<Void> input) {
-        return null;
+                .transformDeferred(CircuitBreakerOperator.of(circuitBreaker))
+                .onErrorResume(throwable -> {
+                    // do fallback
+                    return Mono.empty().then();
+                });
     }
 
     private static Mono<Void> getVoidMono() {
         return Mono.empty().then();
-    }
-
-    private void write(ServerWebExchange exchange) {
-        exchange.getResponse().setStatusCode(HttpStatus.FOUND);
-        exchange.getResponse().getHeaders().set(HttpHeaders.LOCATION, "/simple-service-four/404");
     }
 
     // 重置顺序，数字越小，越在前，但是这是针对从上流到下流来说的；当接收响应时，数字越大越在前

@@ -43,6 +43,7 @@ public class NotFoundFilter implements GatewayFilter, Ordered {
         DataBufferFactory bufferFactory = originalResponse.bufferFactory();
         // 这里我们设置了一个ServerWebExchange#ServerHttpResponse的代理类进行写出拦截，把原本直接写出到默认ServerHttpResponse的数据转移到我们的代理类中
         // 注意⚠️这里的ServerHttpResponse是一个和ServerWebExchange绑定的ServerResponse写出对象，和数据载体ServerResponse没有关系
+        // 之所以使用代理类还有一个很重要的原因，那就是ServerResponse是只读的，所以我们需要创建一个它的副本作为代理类，然后更改副本完成响应重写
         ServerHttpResponseDecorator decoratedResponse = new ServerHttpResponseDecorator(originalResponse) {
             // 写出的核心方法，用过Netty应该可以理解，writeAndFlush()负责做收尾工作，一般实际数据不在这里写出
             @Override
