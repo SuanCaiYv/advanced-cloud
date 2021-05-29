@@ -91,7 +91,9 @@ public class R4jApplication {
     @Bean
     public RateLimiter rateLimiter() {
         RateLimiterConfig rateLimiterConfig = RateLimiterConfig.custom()
-                // 如果某个线程被限流了，这是它必须等待的时间，然后才能再次请求，注意，这锁定的是线程
+                // 如果某个线程请求时被限流了，这是它必须等待的时间，然后才能再次请求，注意，这锁定的是线程
+                // 但是这并不意味着判定请求速率的单元是线程，而仅仅说当发生了限流时，当前请求的线程被阻塞
+                // 比方说以IP:PORT为限流单元，则仅计算并控制来自同一个IP:PORT的请求，而不论这个请求是哪个线程完成的
                 .timeoutDuration(Duration.ofMillis(100))
                 // 每次请求间隔允许的请求数最大值
                 .limitForPeriod(100)
