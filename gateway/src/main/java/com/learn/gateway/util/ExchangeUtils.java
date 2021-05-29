@@ -1,16 +1,14 @@
 package com.learn.gateway.util;
 
-import org.reactivestreams.Publisher;
-import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
+import io.netty.buffer.UnpooledByteBufAllocator;
 import org.springframework.core.io.buffer.DataBuffer;
-import org.springframework.core.io.buffer.DataBufferFactory;
-import org.springframework.core.io.buffer.DataBufferUtils;
-import org.springframework.http.MediaType;
-import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.http.server.reactive.ServerHttpResponseDecorator;
+import org.springframework.core.io.buffer.NettyDataBufferFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.Map;
 
 /**
  * @author 十三月之夜
@@ -18,23 +16,22 @@ import reactor.core.publisher.Mono;
  */
 public class ExchangeUtils {
 
-    public static ServerWebExchange overrideResponse(byte[] content, ServerWebExchange exchange) {
-        ServerHttpResponse originalResponse = exchange.getResponse();
-        DataBufferFactory bufferFactory = originalResponse.bufferFactory();
-        ServerHttpResponseDecorator decoratedResponse = new ServerHttpResponseDecorator(originalResponse) {
-            @Override
-            @SuppressWarnings("unchecked")
-            public Mono<Void> writeWith(Publisher<? extends DataBuffer> body) {
-                Flux<DataBuffer> fluxBody = (Flux<DataBuffer>) body;
-                return super.writeWith(fluxBody.map(dataBuffer -> {
-                    DataBufferUtils.release(dataBuffer);
-                    return bufferFactory.wrap(content);
-                }));
-            }
-        };
-        return exchange
-                .mutate()
-                .response(decoratedResponse)
-                .build();
+    private Mono<Void> responseWrite(ServerWebExchange exchange, HttpStatus statusCode,
+                                     byte[] content, Map<String, Object> headers) {
+
+        exchange.getResponse().setStatusCode(statusCode);
+        if (headers != null) {
+            headers.forEach((key, value) -> exchange.getResponse().getHeaders().add(key, String.valueOf(value)));
+        }
+        if (content != null) {
+            return exchange.getResponse().writeWith(Flux.create(sink -> {
+                NettyDataBufferFactory nettyDataBufferFactory = new NettyDataBufferFactory(new UnpooledByteBufAllocator(false));
+                DataBuffer dataBuffer = nettyDataBufferFactory.wrap(content);
+                sink.next(dataBuffer);
+                sink.complete();
+            }));
+        } else {
+            return exchange.getResponse().setComplete();
+        }
     }
 }

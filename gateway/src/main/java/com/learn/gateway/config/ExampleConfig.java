@@ -8,6 +8,7 @@ import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
@@ -18,6 +19,7 @@ import java.util.Set;
  * @author 十三月之夜
  * @time 2021/5/24 12:29 下午
  */
+@Component
 public class ExampleConfig {
 
     @SuppressWarnings("unchecked")

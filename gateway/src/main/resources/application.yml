@@ -17,4 +17,4 @@ spring:
         use404: true
   redis:
     host: 127.0.0.1
-    password: 461200
+    password:
