@@ -32,6 +32,7 @@
         <module>discovery</module>
         <module>gateway</module>
         <module>r4j</module>
+        <module>stream-kafka</module>
     </modules>
 
     <dependencyManagement>
@@ -82,6 +83,11 @@
             <dependency>
                 <groupId>com.learn</groupId>
                 <artifactId>r4j</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.learn</groupId>
+                <artifactId>stream-kafka</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
         </dependencies>
