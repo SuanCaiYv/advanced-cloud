@@ -30,6 +30,7 @@
       <module name="simple-service-one-1" target="11" />
       <module name="simple-service-one-2" target="11" />
       <module name="simple-service-three-1" target="11" />
+      <module name="stream" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
