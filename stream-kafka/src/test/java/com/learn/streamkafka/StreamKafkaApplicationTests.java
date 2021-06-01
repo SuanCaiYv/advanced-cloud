@@ -9,15 +9,8 @@ import org.springframework.cloud.stream.binder.test.OutputDestination;
 @SpringBootTest
 class StreamKafkaApplicationTests {
 
-    @Autowired
-    private InputDestination inputDestination;
-
-    @Autowired
-    private OutputDestination outputDestination;
-
     @Test
     void contextLoads() {
-        inputDestination.send();
     }
 
 }
