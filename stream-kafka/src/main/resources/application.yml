@@ -1,0 +1,27 @@
+server:
+  port: 9890
+spring:
+  cloud:
+    stream:
+      function:
+        definition: input1;output1
+      kafka:
+        binder:
+          brokers: 127.0.0.1:9092
+        bindings:
+          input1-in-0:
+          output1-out-0:
+      bindings:
+        input1-in-0:
+          destination: test_topic
+          context-type: text/plain
+        output1-out-0:
+          destination: test_topic
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://127.0.0.1:9190/eureka
+logging:
+  level: debug

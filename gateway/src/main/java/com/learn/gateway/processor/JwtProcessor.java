@@ -1,6 +1,7 @@
 package com.learn.gateway.processor;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.learn.gateway.exception.UnhandledException;
 import com.learn.gateway.util.JwtUtils;
 import com.usthe.sureness.processor.BaseProcessor;
 import com.usthe.sureness.processor.exception.SurenessAuthenticationException;
@@ -36,10 +37,15 @@ public class JwtProcessor extends BaseProcessor {
     public Subject authenticated(Subject subject) throws SurenessAuthenticationException {
         JwtSubject jwtSubject = (JwtSubject) subject;
         String jwtStr = (String) jwtSubject.getCredential();
-        DecodedJWT decodedJWT = jwtUtils.verifyAccessToken(jwtStr);
-        List<String> ownRoles = (List<String>) jwtSubject.getOwnRoles();
-        ownRoles.addAll(jwtUtils.getRoles(decodedJWT));
-        return jwtSubject;
+        DecodedJWT decodedJWT = null;
+        try {
+            decodedJWT = jwtUtils.verifyAccessToken(jwtStr);
+            List<String> ownRoles = (List<String>) jwtSubject.getOwnRoles();
+            ownRoles.addAll(jwtUtils.getRoles(decodedJWT));
+            return jwtSubject;
+        } catch (UnhandledException e) {
+            throw new SurenessAuthenticationException(e.toJsonString());
+        }
     }
 
     /**

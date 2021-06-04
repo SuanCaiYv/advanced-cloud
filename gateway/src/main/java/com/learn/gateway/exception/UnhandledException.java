@@ -1,6 +1,7 @@
 package com.learn.gateway.exception;
 
-import com.usthe.sureness.processor.exception.SurenessAuthenticationException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -12,16 +13,10 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 @With
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class UnhandledException extends SurenessAuthenticationException {
-
-    public UnhandledException(String msg) {
-        super(msg);
-    }
-
-    public UnhandledException() {
-        super(null);
-    }
+public class UnhandledException extends Exception {
 
     private int errCode;
 
@@ -30,4 +25,13 @@ public class UnhandledException extends SurenessAuthenticationException {
     private StackTraceElement errStackTraceElement;
 
     private LocalDateTime errTime;
+
+    public String toJsonString() {
+        try {
+            return new ObjectMapper().writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            ;
+        }
+        return null;
+    }
 }
