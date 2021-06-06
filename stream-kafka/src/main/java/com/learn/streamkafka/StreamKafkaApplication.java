@@ -9,11 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Sinks;
 import reactor.util.function.Tuple2;
+import reactor.util.function.Tuples;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 @SpringBootApplication
 @RestController
@@ -41,6 +42,20 @@ public class StreamKafkaApplication {
     }
 
     @Bean
+    public Consumer<String> input4() {
+        return input -> {
+            System.out.println("get4: " + input);
+        };
+    }
+
+    @Bean
+    public Consumer<String> input5() {
+        return input -> {
+            System.out.println("get5: " + input);
+        };
+    }
+
+    @Bean
     public Function<Flux<String>, Flux<String>> function1() {
         return input -> {
             return input.map(String::toUpperCase);
@@ -58,7 +73,6 @@ public class StreamKafkaApplication {
     @Bean
     public Function<Tuple2<Flux<String>, Flux<String>>, Flux<String>> function3() {
         return input -> {
-            System.out.println(input.size());
             return input.getT1()
                     .flatMap(p1 -> {
                         return input.getT2()
@@ -68,6 +82,22 @@ public class StreamKafkaApplication {
                     });
         };
     }
+
+    // 多返回值的例子
+    @Bean
+    public Function<Flux<String>, Tuple2<Flux<String>, Flux<String>>> function4() {
+        return flux -> {
+            Flux<String> connectedFlux = flux.publish().autoConnect(2);
+            Sinks.Many<String> stringMany1 = Sinks.many().unicast().onBackpressureBuffer();
+            Sinks.Many<String> stringMany2 = Sinks.many().unicast().onBackpressureBuffer();
+            Flux<String> evenFlux = connectedFlux.doOnNext(p1 -> stringMany1.emitNext(p1 + "_1", Sinks.EmitFailureHandler.FAIL_FAST));
+            Flux<String> oddFlux = connectedFlux.doOnNext(p1 -> stringMany2.emitNext(p1 + "_2", Sinks.EmitFailureHandler.FAIL_FAST));
+            return Tuples.of(stringMany1.asFlux().doOnSubscribe(x -> evenFlux.subscribe()), stringMany2.asFlux().doOnSubscribe(x -> oddFlux.subscribe()));
+        };
+    }
+
+    // 此外，还有批处理，就是把多个输入整合成List；输入List自动分解成多个output，比较简单，在配置文件中开启一下就行
+    // 除了自动接收消息，SpringCloudStream还提供了轮询消息功能，允许消费者手动询问是否有消息可用
 
     // 自动调用的例子
 //    @Bean

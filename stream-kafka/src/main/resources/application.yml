@@ -5,7 +5,7 @@ spring:
     stream:
       function:
         # f1|f2表示连接两个函数进行处理
-        definition: input1;output1;input2;function1;input3;function1|function2;function3
+        definition: input1;output1;input2;function1;input3;function1|function2;function3;function4;input4;input5
       kafka:
         binder:
           brokers: 127.0.0.1:9092
@@ -23,6 +23,9 @@ spring:
         function1|function2-in-0:
           destination: test_topic1
           group: my_group4
+        function4-in-0:
+          destination: test_topic1
+          group: my_group5
         input3-in-0:
           destination: test_topic2
           group: my_group1
@@ -36,6 +39,15 @@ spring:
           destination: test_topic4
           group: my_group1
           content-type: text/plain
+        input4-in-0:
+          destination: test_topic5
+          group: my_group1
+          content-type: text/plain
+        input5-in-0:
+          destination: test_topic6
+          group: my_group1
+          content-type: text/plain
+        # ---------------分割线----------------
         # 输出
         source1-out-0:
           destination: test_topic1
@@ -48,6 +60,12 @@ spring:
           destination: test_topic2
         function3-out-0:
           destination: test_topic2
+        function4-out-0:
+          destination: test_topic5
+          content-type: text/plain
+        function4-out-1:
+          destination: test_topic6
+          content-type: text/plain
       poller:
         fixed-delay: 1000
       # 此时会自动解析为名为source1-out-x的bindings，可能有很多个binding，会匹配名称和streamBridge的bindingName一样的binding
@@ -59,4 +77,4 @@ eureka:
     service-url:
       defaultZone: http://127.0.0.1:9190/eureka
 logging:
-  level: warn
+  level: debug
