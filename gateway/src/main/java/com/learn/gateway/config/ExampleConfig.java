@@ -23,7 +23,7 @@ import java.util.Set;
 public class ExampleConfig {
 
     @SuppressWarnings("unchecked")
-    @Bean
+    // @Bean
     public RouteLocator routeLocator(RouteLocatorBuilder routeLocatorBuilder) {
         RouteLocatorBuilder.Builder predicates = routeLocatorBuilder.routes()
                 .route("test1", predicateSpec -> {
@@ -133,7 +133,7 @@ public class ExampleConfig {
         return predicates.build();
     }
 
-    @Bean
+    // @Bean
     public RedisRateLimiter redisRateLimiter() {
         // SpringCloudGateway使用令牌桶算法，相见：https://segmentfault.com/a/1190000015967922
         // 第一个参数表示当桶满时允许的请求数

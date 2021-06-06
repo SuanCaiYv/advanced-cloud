@@ -4,19 +4,54 @@ spring:
   cloud:
     stream:
       function:
-        definition: input1;output1
+        # f1|f2表示连接两个函数进行处理
+        definition: input1;output1;input2;function1;input3;function1|function2;function3
       kafka:
         binder:
           brokers: 127.0.0.1:9092
-        bindings:
-          input1-in-0:
-          output1-out-0:
       bindings:
+        # 输入
         input1-in-0:
-          destination: test_topic
-          context-type: text/plain
+          destination: test_topic1
+          group: my_group1
+        input2-in-0:
+          destination: test_topic1
+          group: my_group2
+        function1-in-0:
+          destination: test_topic1
+          group: my_group3
+        function1|function2-in-0:
+          destination: test_topic1
+          group: my_group4
+        input3-in-0:
+          destination: test_topic2
+          group: my_group1
+        # 既然是多输入，那么就需要配置多个In Binding
+        function3-in-0:
+          destination: test_topic3
+          group: my_group1
+          # 多输入可能类型不一致，这里需要指出，否则无法接收
+          content-type: text/plain
+        function3-in-1:
+          destination: test_topic4
+          group: my_group1
+          content-type: text/plain
+        # 输出
+        source1-out-0:
+          destination: test_topic1
         output1-out-0:
-          destination: test_topic
+          destination: test_topic1
+        function1-out-0:
+          destination: test_topic2
+        # 如果需要连接函数，记得这么设置binding
+        function1|function2-out-0:
+          destination: test_topic2
+        function3-out-0:
+          destination: test_topic2
+      poller:
+        fixed-delay: 1000
+      # 此时会自动解析为名为source1-out-x的bindings，可能有很多个binding，会匹配名称和streamBridge的bindingName一样的binding
+      source: source1
 eureka:
   client:
     register-with-eureka: true
@@ -24,4 +59,4 @@ eureka:
     service-url:
       defaultZone: http://127.0.0.1:9190/eureka
 logging:
-  level: debug
+  level: warn
