@@ -8,7 +8,7 @@ spring:
         definition: input1;output1;input2;function1;input3;function1|function2;function3;function4;input4;input5
       kafka:
         binder:
-          brokers: 127.0.0.1:9092
+          brokers: 127.0.0.1:9092,127.0.0.1:9093,127.0.0.1:9091
       bindings:
         # 输入
         input1-in-0:
