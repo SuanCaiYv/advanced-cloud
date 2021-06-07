@@ -68,13 +68,13 @@ public class StreamKafkaApplication {
         };
     }
 
-    @Bean("input7")
-    public Consumer<Message<String>> input7() {
-        return input -> {
-            System.out.println("get7: par: " + input.getHeaders().get("key"));
-            System.out.println("get7: " + input.getPayload());
-        };
-    }
+//    @Bean("input7")
+//    public Consumer<Message<String>> input7() {
+//        return input -> {
+//            System.out.println("get7: par: " + input.getHeaders().get("key"));
+//            System.out.println("get7: " + input.getPayload());
+//        };
+//    }
 
 //    @Bean
 //    public Consumer<Message<String>> input8() {

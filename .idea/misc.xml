@@ -19,6 +19,13 @@
         <option value="$PROJECT_DIR$/simple-service-three/simple-service-three-cluster-two/pom.xml" />
         <option value="$PROJECT_DIR$/simple-service-three/simple-service-three-cluster-three/pom.xml" />
         <option value="$PROJECT_DIR$/stream-kafka/pom.xml" />
+        <option value="$PROJECT_DIR$/stream-kafka-consumer/pom.xml" />
+        <option value="$PROJECT_DIR$/stream-kafka-producer/pom.xml" />
+        <option value="$PROJECT_DIR$/stream-kafka-consumer/consumer-one/pom.xml" />
+        <option value="$PROJECT_DIR$/stream-kafka-consumer/consumer-two/pom.xml" />
+        <option value="$PROJECT_DIR$/stream-kafka-consumer/consumer-three/pom.xml" />
+        <option value="$PROJECT_DIR$/stream-kafka-producer/producer-two/pom.xml" />
+        <option value="$PROJECT_DIR$/stream-kafka-producer/producer-one/pom.xml" />
       </list>
     </option>
   </component>

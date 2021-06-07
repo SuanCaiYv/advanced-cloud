@@ -1,0 +1,27 @@
+server:
+  port: 9891
+spring:
+  cloud:
+    stream:
+      function:
+        definition: input1
+      kafka:
+        binder:
+          brokers: 127.0.0.1:9093;127.0.0.1:9091;127.0.0.1:9092
+          auto-create-topics: true
+      bindings:
+        # 输入
+        input1-in-0:
+          destination: test_topic11
+          group: my_group1
+      poller:
+        fixed-delay: 1000
+      # 此时会自动解析为名为source1-out-x的bindings，可能有很多个binding，会匹配名称和streamBridge的bindingName一样的binding
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://127.0.0.1:9190/eureka
+logging:
+  level: debug

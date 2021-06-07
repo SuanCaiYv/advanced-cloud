@@ -18,6 +18,11 @@
     <file url="file://$PROJECT_DIR$/simple-service-two/simple-service-two-cluster-one/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/simple-service-two/simple-service-two-cluster-three/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/simple-service-two/simple-service-two-cluster-two/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stream-kafka-consumer/consumer-one/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stream-kafka-consumer/consumer-three/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stream-kafka-consumer/consumer-two/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stream-kafka-producer/producer-one/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stream-kafka-producer/producer-two/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/stream-kafka/src/main/java" charset="UTF-8" />
   </component>
 </project>

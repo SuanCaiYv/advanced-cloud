@@ -5,10 +5,10 @@ spring:
     stream:
       function:
         # f1|f2表示连接两个函数进行处理
-        definition: input1;output1;input2;function1;input3;function1|function2;function3;function4;input4;input5;input6;input7
+        definition: input1;output1;input2;function1;input3;function1|function2;function3;function4;input4;input5;input6;input7;input8
       kafka:
         binder:
-          brokers: 127.0.0.1:9093
+          brokers: 127.0.0.1:9093;127.0.0.1:9091;127.0.0.1:9092
           auto-create-topics: true
       bindings:
         # 输入
@@ -30,9 +30,12 @@ spring:
         input6-in-0:
           destination: test_topic7
           group: my_group6
-        input7-in-0:
-          destination: test_topic7
-          group: my_group6
+#        input7-in-0:
+#          destination: test_topic7
+#          group: my_group6
+#        input8-in-0:
+#          destination: test_topic1
+#          group: my_group6
         input3-in-0:
           destination: test_topic2
           group: my_group1

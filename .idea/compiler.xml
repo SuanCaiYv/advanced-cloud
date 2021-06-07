@@ -7,6 +7,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="consumer-one" />
+        <module name="producer-one" />
         <module name="simple-service-five-cluster-two" />
         <module name="simple-service-four-cluster-two" />
         <module name="simple-service-five-cluster-three" />
@@ -17,10 +19,13 @@
         <module name="stream-kafka" />
         <module name="simple-service-three-cluster-two" />
         <module name="simple-service-five-cluster-four" />
+        <module name="consumer-three" />
         <module name="discovery" />
         <module name="simple-service-three-cluster-three" />
         <module name="simple-service-five-cluster-one" />
         <module name="simple-service-one-cluster-two" />
+        <module name="consumer-two" />
+        <module name="producer-two" />
         <module name="simple-service-one-cluster-one" />
         <module name="simple-service-two-cluster-two" />
         <module name="gateway" />
@@ -37,9 +42,14 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="consumer-one" options="-parameters" />
+      <module name="consumer-three" options="-parameters" />
+      <module name="consumer-two" options="-parameters" />
       <module name="demo" options="-parameters" />
       <module name="discovery" options="-parameters" />
       <module name="gateway" options="-parameters" />
+      <module name="producer-one" options="-parameters" />
+      <module name="producer-two" options="-parameters" />
       <module name="r4j" options="-parameters" />
       <module name="simple-service-five" options="-parameters" />
       <module name="simple-service-five-cluster-four" options="-parameters" />
@@ -65,6 +75,8 @@
       <module name="simple-service-two-cluster-two" options="-parameters" />
       <module name="stream" options="-parameters" />
       <module name="stream-kafka" options="-parameters" />
+      <module name="stream-kafka-consumer" options="-parameters" />
+      <module name="stream-kafka-producer" options="-parameters" />
     </option>
   </component>
 </project>
