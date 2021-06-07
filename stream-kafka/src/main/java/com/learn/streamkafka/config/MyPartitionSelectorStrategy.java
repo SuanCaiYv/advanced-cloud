@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 public class MyPartitionSelectorStrategy implements PartitionSelectorStrategy {
     @Override
     public int selectPartition(Object key, int partitionCount) {
+        System.out.println("count: " + partitionCount);
         return key.hashCode() % partitionCount;
     }
 }

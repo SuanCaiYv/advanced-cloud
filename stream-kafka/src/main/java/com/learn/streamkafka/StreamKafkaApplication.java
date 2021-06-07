@@ -60,6 +60,30 @@ public class StreamKafkaApplication {
         };
     }
 
+    @Bean("input6")
+    public Consumer<Message<String>> input6() {
+        return input -> {
+            System.out.println("get6: par: " + input.getHeaders().get("key"));
+            System.out.println("get6: " + input.getPayload());
+        };
+    }
+
+    @Bean("input7")
+    public Consumer<Message<String>> input7() {
+        return input -> {
+            System.out.println("get7: par: " + input.getHeaders().get("key"));
+            System.out.println("get7: " + input.getPayload());
+        };
+    }
+
+//    @Bean
+//    public Consumer<Message<String>> input8() {
+//        return input -> {
+//            System.out.println("get8: par: " + input.getHeaders().get("key"));
+//            System.out.println("get8: " + input.getPayload());
+//        };
+//    }
+
     @Bean
     public Function<Flux<String>, Flux<String>> function1() {
         return input -> {
@@ -103,6 +127,9 @@ public class StreamKafkaApplication {
 
     // 此外，还有批处理，就是把多个输入整合成List；输入List自动分解成多个output，比较简单，在配置文件中开启一下就行
     // 除了自动接收消息，SpringCloudStream还提供了轮询消息功能，允许消费者手动询问是否有消息可用
+    // 在这里说一下，每一个SpringApplication实例，是通过topic+group进行唯一确定Consumer的；也就是说每个SpringApplication对于同一个Topic下的同一个Group只能有一个Consumer
+    // 想要实现组内单播，只能开启多个SpringApplication实例，而不是多个Consumer实例；此外，还可以通过设置同一个组的不同Consumer的instanceIndex来实现消费区锁定，但是这样就享受不到Kafka的消费区转移了
+    // 大意就是，Kafka会在某个消费者实例不可用时，把这个消费者实例消费的区转移给别的消费者实例，而如果指定了每个消费者的消费区，就自动禁用了这种功能。详见：https://www.hangge.com/blog/cache/detail_2796.html
 
     // 自动调用的例子
 //    @Bean
@@ -138,12 +165,12 @@ public class StreamKafkaApplication {
         return "ok";
     }
 
-    @GetMapping("/send4/{val}")
-    public String send4(@PathVariable("val") String val) {
+    @GetMapping("/send4/{partition}{val}")
+    public String send4(@PathVariable("partition") Integer partition, @PathVariable("val") String val) {
         HashMap<String, Object> headers = new HashMap<>();
-        headers.put("key", val.hashCode());
+        headers.put("key", partition);
         Message<String> message = new GenericMessage<>(val, headers);
-        streamBridge.send("source1-out-0", message, MimeTypeUtils.TEXT_PLAIN);
+        streamBridge.send("source1-out-1", message, MimeTypeUtils.TEXT_PLAIN);
         return "ok";
     }
 
