@@ -5,6 +5,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.context.annotation.Bean;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.GenericMessage;
+import org.springframework.util.MimeType;
+import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +17,7 @@ import reactor.core.publisher.Sinks;
 import reactor.util.function.Tuple2;
 import reactor.util.function.Tuples;
 
+import java.util.HashMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -130,6 +135,15 @@ public class StreamKafkaApplication {
     public String send3(@PathVariable("val1") String val1, @PathVariable("val2") String val2) {
         streamBridge.send("test_topic3", val1);
         streamBridge.send("test_topic4", val2);
+        return "ok";
+    }
+
+    @GetMapping("/send4/{val}")
+    public String send4(@PathVariable("val") String val) {
+        HashMap<String, Object> headers = new HashMap<>();
+        headers.put("key", val.hashCode());
+        Message<String> message = new GenericMessage<>(val, headers);
+        streamBridge.send("source1-out-0", message, MimeTypeUtils.TEXT_PLAIN);
         return "ok";
     }
 

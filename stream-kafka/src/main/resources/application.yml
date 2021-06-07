@@ -9,6 +9,7 @@ spring:
       kafka:
         binder:
           brokers: 127.0.0.1:9092,127.0.0.1:9093,127.0.0.1:9091
+          auto-create-topics: true
       bindings:
         # 输入
         input1-in-0:
@@ -51,6 +52,9 @@ spring:
         # 输出
         source1-out-0:
           destination: test_topic1
+          producer:
+            partitionKeyExtractorName: myPartitionKeyExtractorStrategy
+            partitionSelectorName: myPartitionSelectorStrategy
         output1-out-0:
           destination: test_topic1
         function1-out-0:
